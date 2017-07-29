@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+</head>
+<body>
+
+<div>
+    <p>Wybierz zdarzenie</p>
+
+<select id="problem">
+  <option value="trafic jam">Korki</option>
+  <option value="accidents">Wypadki</option>
+  <option value="road works">Remonty</option>
+  <option value="all">Wszystkie</option>
+</select>
+</div>
+
+<div>
+    <p>Wybierz promień [km] </p>
+
+<input type="number" id="radius">
+</div>
+
+  <div id="latlong">
+      <p>Szerokość: <span id="latbox"></span></p>
+      <p>Długość: <span id="lngbox"></span></p>
+  </div>
+
+ <button type="button" style="margin-bottom: 10px">Szukaj!</button>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+    <script>
+        function myMap() {
+            var point = new google.maps.LatLng(52.408492,16.933965);
+            var mapProp= {
+                center: point,
+                zoom:13,
+                };
+        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        var marker=new google.maps.Marker({
+          position: point,
+            draggable: true,
+            title: "Position",
+          map: map
+        });
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("latbox").innerHTML = this.getPosition().lat();
+            document.getElementById("lngbox").innerHTML = this.getPosition().lng();
+        });
+        }
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9qSjYgiq67-ck5Ro5nEVshCtOuIj2eU&callback=myMap">
+    </script>
+
+</body>
+</html>
