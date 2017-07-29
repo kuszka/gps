@@ -1,0 +1,62 @@
+[
+  {
+    "model": "server.event",
+    "pk" : 1,
+    "fields": {
+      "eventType": "roadworks",
+      "start" : "3:47:53",
+      "end" : "19:30:00",
+      "lat" : "52.3979634",
+      "long" : "16.9403975",
+      "description" : "Renowacja torow"
+    }
+  },
+  {
+    "model": "server.event",
+    "pk" : 2,
+    "fields": {
+      "eventType": "accidents",
+      "start" : "15:57:53",
+      "end" : "18:30:00",
+      "lat" : "52.4102524",
+      "long" : "16.9169274",
+      "description" : "Awaria tramwaju"
+    }
+  },
+  {
+    "model": "server.event",
+    "pk" : 3,
+    "fields": {
+      "eventType": "roadworks",
+      "start" : "10:55:20",
+      "end" : "20:10:00",
+      "lat" : "52.40677",
+      "long" : "16.9103345",
+      "description" : "Zwezony przejazd"
+    }
+  },
+  {
+    "model": "server.event",
+    "pk" : 4,
+    "fields": {
+      "eventType": "trafficjams",
+      "start" : "7:45:00",
+      "end" : "9:10:50",
+      "lat" : "52.4020386",
+      "long" : "16.9309611",
+      "description" : "Korek"
+    }
+  },
+  {
+    "model": "server.event",
+    "pk" : 5,
+    "fields": {
+      "eventType": "trafficjams",
+      "start" : "14:22:30",
+      "end" : "23:01:50",
+      "lat" : "52.3952783",
+      "long" : "16.9506685",
+      "description" : "Korek"
+    }
+  }
+]
