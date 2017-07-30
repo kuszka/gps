@@ -20,12 +20,12 @@ def event(request, event):
     for c in Event.objects.all():
         if(c.start< timeNow) and (c.end>timeNow):
             if event == 'all':
-                dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "decription": c.description}
+                dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "description": c.description}
                 response.append(dictionary)
 
             elif (event == 'trafficjams') or (event == 'accidents') or (event == 'roadworks'):
                 if c.eventType == event:
-                    dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "decription": c.description}
+                    dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "description": c.description}
                     response.append(dictionary)
             else:
                 return HttpResponse("<html><body>Sorry, it isn't valid URL</body></html>")
@@ -43,14 +43,14 @@ def eventrange(request, event, act_lat, act_long, radius):
                 if haversine(float(act_long), float(act_lat), float(c.long), float(c.lat))<= float(radius):
                     print(haversine(float(act_long), float(act_lat), float(c.long),float(c.lat)))
                     print(radius)
-                    dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "decription": c.description}
+                    dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "description": c.description}
                     response.append(dictionary)
             elif (event == 'trafficjams') or (event == 'accidents') or (event == 'roadworks'):
                 if c.eventType == event:
                     if haversine(float(act_long), float(act_lat), float(c.long), float(c.lat)) <= float(radius):
                         print(haversine(float(act_long), float(act_lat), float(c.long), float(c.lat)))
                         print(radius)
-                        dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "decription": c.description}
+                        dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "description": c.description}
                         response.append(dictionary)
             else:
                 return HttpResponse("<html><body>Sorry, it isn't valid URL</body></html>")

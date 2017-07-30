@@ -3,16 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <title>Client</title>
+    {% load staticfiles %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="{% static 'client/dataProcessing.js' %}"></script>
+    {% endblock %}-->
+    <script>
+        var markers;
+        var map;
+        function sendDemand() {
+            var e = document.getElementById("problem");
+            var strUser = e.options[e.selectedIndex].value;
+            var rad = document.getElementById("radius").value;
+            var lat = document.getElementById("latbox").textContent;
+            var long = document.getElementById("lngbox").textContent;
+            //console.log('hello');
+            var urlServer = "http://0.0.0.0:8000/server/"+strUser;
+             if (!rad.valueMissing) {
+                if(rad>0){
+                    urlServer += "/" + lat + "," + long + "/" + Math.ceil(rad);
+                    //console.log(urlServer)
+                    }
+                }
+            $.ajax({
+            url: urlServer,
+            dataType: 'json',
+            success: function(data) {
+                    console.log('parsing...');
+                    if(!markers.empty){
+                        for (var j = 0; j < markers.length; j++) {
+                            markers[j].setMap(null);
+                        }
+                        markers = [];
+                    }
+                    for (var i=0;i<data.length;i++) {
+                        var object = data[i];
+                        for (var property in object) {
+                            if(object.hasOwnProperty('latitude') && object.hasOwnProperty('longitude') && object.hasOwnProperty('description')){
+                                var point = new google.maps.LatLng(object['latitude'],object['longitude']);
+                                //var thisLocation = object['latitude'] + "," + object['longitude'];
+                                var desc = object['description'].toString();
+
+                                //new google.maps.Marker({
+                                var marker = new google.maps.Marker({
+                                    position: point,
+                                    title: desc,
+                                    map: map,
+                                    icon: 'http://maps.google.com/mapfiles/marker_grey.png'
+                                });
+                                markers.push(marker);
+                            }
+                        }
+                    }
+            },
+             error: function() {
+                document.write("error");
+            }
+            });
+        }
+
+        function myMap() {
+            markers = [];
+            var point = new google.maps.LatLng(52.408492,16.933965);
+            var mapProp= {
+                center: point,
+                zoom:13
+                };
+        map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        var marker=new google.maps.Marker({
+          position: point,
+            draggable: true,
+            title: "Position",
+          map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: "<span>Twoja pozycja</span>"
+        });
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("latbox").innerHTML = this.getPosition().lat();
+            document.getElementById("lngbox").innerHTML = this.getPosition().lng();
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+        });
+        }
+    </script>
+
 </head>
 <body>
 
 <div>
     <p>Wybierz zdarzenie</p>
 
-<select id="problem">
-  <option value="trafic jam">Korki</option>
+<select id="problem" name="problem">
+  <option value="trafficjams">Korki</option>
   <option value="accidents">Wypadki</option>
-  <option value="road works">Remonty</option>
+  <option value="roadworks">Remonty</option>
   <option value="all">Wszystkie</option>
 </select>
 </div>
@@ -24,33 +111,13 @@
 </div>
 
   <div id="latlong">
-      <p>Szerokość: <span id="latbox"></span></p>
-      <p>Długość: <span id="lngbox"></span></p>
+      <p>Szerokość: <span id="latbox">52.408492</span></p>
+      <p>Długość: <span id="lngbox">16.933965</span></p>
   </div>
 
- <button type="button" style="margin-bottom: 10px">Szukaj!</button>
+ <button id="button" type="button" onclick="sendDemand()" style="margin-bottom: 10px" >Szukaj!</button>
 
 <div id="googleMap" style="width:100%;height:400px;"></div>
-    <script>
-        function myMap() {
-            var point = new google.maps.LatLng(52.408492,16.933965);
-            var mapProp= {
-                center: point,
-                zoom:13,
-                };
-        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        var marker=new google.maps.Marker({
-          position: point,
-            draggable: true,
-            title: "Position",
-          map: map
-        });
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            document.getElementById("latbox").innerHTML = this.getPosition().lat();
-            document.getElementById("lngbox").innerHTML = this.getPosition().lng();
-        });
-        }
-    </script>
     <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9qSjYgiq67-ck5Ro5nEVshCtOuIj2eU&callback=myMap">
     </script>
