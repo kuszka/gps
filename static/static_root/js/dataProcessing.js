@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Client</title>
-    {% load staticfiles %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/dataProcessing.js' %}"></script>
-
-
-    <!--<script>
+/**
+ * Created by magda on 30.07.17.
+ */
         var markers;
         var map;
-        function sendDemand() {
+        window.sendDemand = function(){
             var e = document.getElementById("problem");
             var strUser = e.options[e.selectedIndex].value;
             var rad = document.getElementById("radius").value;
@@ -86,9 +77,9 @@
                 document.write("error");
             }
             });
-        }
+        };
 
-        function myMap() {
+       window.myMap = function(){
             markers = [];
             var point = new google.maps.LatLng(52.408492,16.933965);
             var mapProp= {
@@ -112,39 +103,4 @@
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
         });
-        }
-    </script>-->
-
-</head>
-<body>
-
-<div>
-    <p>Wybierz zdarzenie</p>
-
-<select id="problem" name="problem">
-  <option value="trafficjams" style="background-color: mediumpurple">Korki</option>
-  <option value="accidents" style="background-color: orange">Wypadki</option>
-  <option value="roadworks" style="background-color: limegreen">Remonty</option>
-  <option value="all">Wszystkie</option>
-</select>
-</div>
-
-<div>
-    <p>Wybierz promień [km] </p>
-
-<input type="number" id="radius">
-</div>
-
-  <div id="latlong">
-      <p>Szerokość: <span id="latbox">52.408492</span></p>
-      <p>Długość: <span id="lngbox">16.933965</span></p>
-  </div>
-
- <button id="button" type="button" onclick="sendDemand()" style="margin-bottom: 10px" >Szukaj!</button>
-
-<div id="googleMap" style="width:100%;height:400px;"></div>
-    <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN9qSjYgiq67-ck5Ro5nEVshCtOuIj2eU&callback=myMap">
-    </script>
-</body>
-</html>
+        };

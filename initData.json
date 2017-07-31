@@ -8,7 +8,7 @@
       "end" : "19:30:00",
       "lat" : "52.3979634",
       "long" : "16.9403975",
-      "description" : "Renowacja torow"
+      "description" : "Renowacja torów"
     }
   },
   {
@@ -32,7 +32,7 @@
       "end" : "20:10:00",
       "lat" : "52.40677",
       "long" : "16.9103345",
-      "description" : "Zwezony przejazd"
+      "description" : "Zweżony przejazd"
     }
   },
   {
@@ -57,6 +57,66 @@
       "lat" : "52.3952783",
       "long" : "16.9506685",
       "description" : "Korek"
+    }
+  },
+   {
+    "model": "server.event",
+    "pk" : 6,
+    "fields": {
+      "eventType": "roadworks",
+      "start" : "12:22:30",
+      "end" : "16:01:50",
+      "lat" : "52.3865612",
+      "long" : "16.9628064",
+      "description" : "Renowacja nawierzchni"
+    }
+  },
+   {
+    "model": "server.event",
+    "pk" : 7,
+    "fields": {
+      "eventType": "accidents",
+      "start" : "22:47:30",
+      "end" : "23:59:11",
+      "lat" : "52.421692",
+      "long" : "16.8969732",
+      "description" : "Wypadek, torowisko zablokowane"
+    }
+  },
+   {
+    "model": "server.event",
+    "pk" : 8,
+    "fields": {
+      "eventType": "roadworks",
+      "start" : "00:12:20",
+      "end" : "04:03:50",
+      "lat" : "52.3920181",
+      "long" : "16.9268213",
+      "description" : "Przebudowa, droga nieprzejezdna"
+    }
+  },
+   {
+    "model": "server.event",
+    "pk" : 9,
+    "fields": {
+      "eventType": "trafficjams",
+      "start" : "15:22:30",
+      "end" : "17:01:50",
+      "lat" : "52.4332899",
+      "long" : "16.9239399",
+      "description" : "Korek"
+    }
+  },
+   {
+    "model": "server.event",
+    "pk" : 10,
+    "fields": {
+      "eventType": "accidents",
+      "start" : "20:12:10",
+      "end" : "23:15:50",
+      "lat" : "52.4221229",
+      "long" : "16.918784",
+      "description" : "Awaria tramwaju"
     }
   }
 ]
