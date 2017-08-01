@@ -1,7 +1,7 @@
 /**
  * Created by magda on 30.07.17.
  */
-var markers;
+var markers; //table of markers
 var map;
 window.sendDemand = function(){
     var e = document.getElementById("problem");
@@ -16,22 +16,25 @@ window.sendDemand = function(){
             urlServer += "/" + lat + "," + long + "/" + Math.ceil(rad);
         }
     }
+    console.log(urlServer);
+    // get response from server and put markers on map
     $.ajax({
         url: urlServer,
         dataType: 'json',
         success: function(data) {
             console.log('parsing...');
+            //delete all old markers
             if(!markers.empty){
                 for (var j = 0; j < markers.length; j++) {
                     markers[j].setMap(null);
                 }
                 markers = [];
             }
+            // for every object in json get properties and put it on map
             for (var i=0;i<data.length;i++) {
                 var object = data[i];
                 var iconBase = "http://maps.google.com/mapfiles/";
                 var iconURL;
-                var infowindows =[];
                 for (var property in object) {
                     if(object.hasOwnProperty('latitude') && object.hasOwnProperty('longitude') && object.hasOwnProperty('description')){
                         var point = new google.maps.LatLng(object['latitude'],object['longitude']);
@@ -55,7 +58,7 @@ window.sendDemand = function(){
                         //new google.maps.Marker({
                         var marker = new google.maps.Marker({
                             position: point,
-                            title: desc,
+                            //title: desc,
                             map: map,
                             icon: iconURL
                         });
@@ -71,12 +74,14 @@ window.sendDemand = function(){
                 }
             }
         },
+        // if something fail with communication (probably server not running on 0.0.0.0:8000 ?)
         error: function() {
             document.write("error");
         }
     });
 };
 
+//initialization of map
 window.myMap = function(){
     markers = [];
     var point = new google.maps.LatLng(52.408492,16.933965);
@@ -85,10 +90,11 @@ window.myMap = function(){
         zoom:13
     };
     map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    // your position marker (red one)
     var marker=new google.maps.Marker({
         position: point,
         draggable: true,
-        title: "Position",
+        //title: "Position",
         map: map
     });
     var infowindow = new google.maps.InfoWindow({
