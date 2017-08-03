@@ -118,5 +118,65 @@
       "long" : "16.918784",
       "description" : "Awaria tramwaju"
     }
+  },
+     {
+    "model": "server.event",
+    "pk" : 11,
+    "fields": {
+      "eventType": "accidents",
+      "start" : "9:12:50",
+      "end" : "15:46:23",
+      "lat" : "52.3973029",
+      "long" : "16.9070613",
+      "description" : "Zerwana trakcja"
+    }
+  },
+     {
+    "model": "server.event",
+    "pk" : 12,
+    "fields": {
+      "eventType": "trafficjams",
+      "start" : "07:50:10",
+      "end" : "09:56:50",
+      "lat" : "52.4128182",
+      "long" : "16.8752187",
+      "description" : "Korek"
+    }
+  },
+     {
+    "model": "server.event",
+    "pk" : 13,
+    "fields": {
+      "eventType": "trafficjams",
+      "start" : "9:35:45",
+      "end" : "12:15:50",
+      "lat" : "52.4184198",
+      "long" : "16.9747823",
+      "description" : "Korek"
+    }
+  },
+     {
+    "model": "server.event",
+    "pk" : 14,
+    "fields": {
+      "eventType": "accidents",
+      "start" : "10:52:40",
+      "end" : "16:57:47",
+      "lat" : "52.4059447",
+      "long" : "16.9316159",
+      "description" : "Awaria tramwaju"
+    }
+  },
+     {
+    "model": "server.event",
+    "pk" : 15,
+    "fields": {
+      "eventType": "roadworks",
+      "start" : "14:04:05",
+      "end" : "17:13:46",
+      "lat" : "52.4059447",
+      "long" : "16.9316159",
+      "description" : "Remont nawierzchni"
+    }
   }
 ]

@@ -3,6 +3,7 @@
  */
 var markers; //table of markers
 var map;
+var myMarker;
 window.sendDemand = function(){
     var e = document.getElementById("problem");
     var strUser = e.options[e.selectedIndex].value;
@@ -10,7 +11,7 @@ window.sendDemand = function(){
     var lat = document.getElementById("latbox").textContent;
     var long = document.getElementById("lngbox").textContent;
     //console.log('hello');
-    var urlServer = "http://0.0.0.0:8000/server/"+strUser;
+    var urlServer = "http://127.0.0.1:8000/server/"+strUser;
     if (!rad.valueMissing) {
         if(rad>0){
             urlServer += "/" + lat + "," + long + "/" + Math.ceil(rad);
@@ -74,7 +75,7 @@ window.sendDemand = function(){
                 }
             }
         },
-        // if something fail with communication (probably server not running on 0.0.0.0:8000 ?)
+        // if something fail with communication (probably server not running on proper IP ?)
         error: function() {
             document.write("error");
         }
@@ -91,7 +92,7 @@ window.myMap = function(){
     };
     map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
     // your position marker (red one)
-    var marker=new google.maps.Marker({
+    myMarker=new google.maps.Marker({
         position: point,
         draggable: true,
         //title: "Position",
@@ -100,11 +101,42 @@ window.myMap = function(){
     var infowindow = new google.maps.InfoWindow({
         content: "<span>Twoja pozycja</span>"
     });
-    google.maps.event.addListener(marker, 'dragend', function (event) {
+    google.maps.event.addListener(myMarker, 'dragend', function (event) {
         document.getElementById("latbox").innerHTML = this.getPosition().lat();
         document.getElementById("lngbox").innerHTML = this.getPosition().lng();
     });
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
+    google.maps.event.addListener(myMarker, 'click', function() {
+        infowindow.open(map,myMarker);
     });
+};
+
+window.geoFindMe = function () {
+    var output = document.getElementById("out");
+
+  if (!navigator.geolocation){
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    document.getElementById("latbox").innerHTML = latitude;
+    document.getElementById("lngbox").innerHTML = longitude;
+
+    // TODO not working, probably something with listeners??
+      // https://duncan99.wordpress.com/2015/03/21/google-maps-api-locked-draggable-markers/
+
+    //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+      var googlePos = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+      myMarker.setPosition(googlePos);
+    }
+
+  function error() {
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  //output.innerHTML = "<p>Locating…</p>";
+
+  navigator.geolocation.getCurrentPosition(success,error);
 };

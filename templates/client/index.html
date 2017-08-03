@@ -17,11 +17,14 @@
 
 <select id="problem" name="problem">
   <option value="trafficjams" style="background-color: mediumpurple">Korki</option>
-  <option value="accidents" style="background-color: orange">Wypadki</option>
+  <option value="accidents" style="background-color: orange">Awarie</option>
   <option value="roadworks" style="background-color: limegreen">Remonty</option>
   <option value="all">Wszystkie</option>
 </select>
 </div>
+
+<p><button onclick="geoFindMe()">Show my location</button></p>
+<div id="out"></div>
 
 <div>
     <p>Wybierz promień [km] </p>
@@ -30,8 +33,8 @@
 </div>
 
   <div id="latlong">
-      <p>Szerokość: <span id="latbox">52.408492</span></p>
-      <p>Długość: <span id="lngbox">16.933965</span></p>
+      <p>Szerokość: <span id="latbox">52.408492</span>°</p>
+      <p>Długość: <span id="lngbox">16.933965</span>°</p>
   </div>
 
  <button id="button" type="button" onclick="sendDemand()" style="margin-bottom: 10px" >Szukaj!</button>
