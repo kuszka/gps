@@ -3,23 +3,23 @@
  */
 var markers; //table of markers
 var map;
-var myMarker;
+var myMarker; //user position
+
 window.sendDemand = function(){
     var e = document.getElementById("problem");
     var strUser = e.options[e.selectedIndex].value;
     var rad = document.getElementById("radius").value;
     var lat = document.getElementById("latbox").textContent;
     var long = document.getElementById("lngbox").textContent;
-    //console.log('hello');
+
+    //merge URL - based on hostname, what makes it available on other devices in local network
     var id = location.hostname;
-    //document.getElementById("ip_server").innerHTML = id;
     var urlServer = "http://" + id + ":8000/server/" + strUser;
     if (!rad.valueMissing) {
         if(rad>0){
             urlServer += "/" + lat + "," + long + "/" + Math.ceil(rad);
         }
     }
-    console.log(urlServer);
     // get response from server and put markers on map
     $.ajax({
         url: urlServer,
@@ -40,9 +40,9 @@ window.sendDemand = function(){
                 var iconURL;
                 for (var property in object) {
                     if(object.hasOwnProperty('latitude') && object.hasOwnProperty('longitude') && object.hasOwnProperty('description')){
+
                         var point = new google.maps.LatLng(object['latitude'],object['longitude']);
-                        //var thisLocation = object['latitude'] + "," + object['longitude'];
-                        var desc = object['description'].toString();
+                        //different color for every event
                         switch (object['eventType']){
                             case 'accidents':
                                 iconURL = iconBase + 'marker_orange.png';
@@ -57,27 +57,26 @@ window.sendDemand = function(){
                                 iconURL = iconBase + 'marker_black.png';
                                 break;
                         }
+
                         var infoWindow = new google.maps.InfoWindow;
-                        //new google.maps.Marker({
                         var marker = new google.maps.Marker({
                             position: point,
-                            //title: desc,
                             map: map,
                             icon: iconURL
                         });
+                        //make the on-click label
                         (function (marker, object) {
                             google.maps.event.addListener(marker, "click", function (e) {
                             infoWindow.setContent(object['description']);
                             infoWindow.open(map, marker);
                             });
                          })(marker, object);
-
                         markers.push(marker);
                     }
                 }
             }
         },
-        // if something fail with communication (probably server not running on proper IP ?)
+        // if something fail with communication
         error: function() {
             document.write("error");
         }
@@ -97,7 +96,6 @@ window.myMap = function(){
     myMarker=new google.maps.Marker({
         position: point,
         draggable: true,
-        //title: "Position",
         map: map
     });
     var infowindow = new google.maps.InfoWindow({
@@ -126,14 +124,11 @@ window.geoFindMe = function () {
     document.getElementById("latbox").innerHTML = latitude;
     document.getElementById("lngbox").innerHTML = longitude;
 
-    //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-      var googlePos = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
-      myMarker.setPosition(googlePos);
+    var googlePos = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
+    myMarker.setPosition(googlePos);
     }
-
   function error() {
     output.innerHTML = "Błąd podczas uzyskiwania lokalizacji";
   }
-
   navigator.geolocation.getCurrentPosition(success,error);
 };

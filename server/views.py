@@ -8,17 +8,13 @@ from math import radians, cos, sin, asin, sqrt
 
 # Create your views here.
 
-'''
-def accidentsrange(request, act_lat, act_long):
-    html = "<html><body>%s  %s</body></html>" % (act_lat, act_long)
-    return HttpResponse(html)
-'''
 
 def event(request, event):
     response = []
-    timeNow = datetime.now().time()
+    timenow = datetime.now().time()
+
     for c in Event.objects.all():
-        if(c.start< timeNow) and (c.end>timeNow):
+        if(c.start< timenow) and (c.end>timenow):
             if event == 'all':
                 dictionary = {"eventType": c.eventType, "latitude": c.lat, "longitude": c.long, "description": c.description}
                 response.append(dictionary)
