@@ -11,7 +11,9 @@ window.sendDemand = function(){
     var lat = document.getElementById("latbox").textContent;
     var long = document.getElementById("lngbox").textContent;
     //console.log('hello');
-    var urlServer = "http://0:8000/server/"+strUser;
+    var id = location.hostname;
+    //document.getElementById("ip_server").innerHTML = id;
+    var urlServer = "http://" + id + ":8000/server/" + strUser;
     if (!rad.valueMissing) {
         if(rad>0){
             urlServer += "/" + lat + "," + long + "/" + Math.ceil(rad);
