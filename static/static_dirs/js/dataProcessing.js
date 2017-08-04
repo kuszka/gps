@@ -114,7 +114,7 @@ window.geoFindMe = function () {
     var output = document.getElementById("out");
 
   if (!navigator.geolocation){
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    output.innerHTML = "<p>Geolokacja nie jest wspierana przez twoją przeglądarkę</p>";
     return;
   }
 
@@ -124,19 +124,14 @@ window.geoFindMe = function () {
     document.getElementById("latbox").innerHTML = latitude;
     document.getElementById("lngbox").innerHTML = longitude;
 
-    // TODO not working, probably something with listeners??
-      // https://duncan99.wordpress.com/2015/03/21/google-maps-api-locked-draggable-markers/
-
     //output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
       var googlePos = new google.maps.LatLng(parseFloat(latitude),parseFloat(longitude));
       myMarker.setPosition(googlePos);
     }
 
   function error() {
-    output.innerHTML = "Unable to retrieve your location";
+    output.innerHTML = "Błąd podczas uzyskiwania lokalizacji";
   }
-
-  //output.innerHTML = "<p>Locating…</p>";
 
   navigator.geolocation.getCurrentPosition(success,error);
 };
